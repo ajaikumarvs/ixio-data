@@ -1,46 +1,47 @@
+# update_windows.py
 import json
 import datetime
-import requests
+from pathlib import Path
 
-# Microsoft TechBench API endpoint
-API_URL = "https://www.microsoft.com/en-us/api/controls/contentinclude/html"
-
-# Windows editions to track
-WINDOWS_EDITIONS = [
-    {"name": "Windows 10", "product_id": "cb96bdee-8629-4be4-80d4-f5568c1c3c4c"},
-    {"name": "Windows 11", "product_id": "99b8a1f1-92e3-4b43-b5ee-7481af14c1c2"}
+WINDOWS_ISOS = [
+    {
+        "name": "Windows 10",
+        "version": "22H2",
+        "source": "Microsoft Official",
+        "download_page": "https://www.microsoft.com/software-download/windows10",
+        "direct_links": []
+    },
+    {
+        "name": "Windows 11",
+        "version": "24H2",
+        "source": "Microsoft Official",
+        "download_page": "https://www.microsoft.com/software-download/windows11",
+        "direct_links": []
+    },
+    {
+        "name": "Windows Server 2025",
+        "version": "RTM",
+        "source": "Microsoft Evaluation Center",
+        "download_page": "https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-2025",
+        "direct_links": []
+    }
 ]
 
-def fetch_windows_iso(product_id):
-    payload = {
-        "pageId": "b6d606b4-9f45-4c7b-8287-1d79da2d6e4f",
-        "host": "www.microsoft.com",
-        "segments": ["software-download", "windows11"],  # Windows 10 or 11 path changes here
-        "query": {"productEditionId": product_id}
-    }
-    headers = {"Content-Type": "application/json"}
-    resp = requests.post(API_URL, json=payload, headers=headers)
-    if resp.status_code != 200:
-        return None
-    return resp.text
-
 def main():
-    output = {
+    data = {
         "last_updated": datetime.datetime.utcnow().replace(microsecond=0).isoformat() + "Z",
-        "windows": []
+        "windows": WINDOWS_ISOS
     }
 
-    for edition in WINDOWS_EDITIONS:
-        iso_info = fetch_windows_iso(edition["product_id"])
-        if iso_info:
-            output["windows"].append({
-                "name": edition["name"],
-                "source": "Microsoft Official",
-                "download_page_html": iso_info  # UI will parse to get actual links
-            })
+    # Write atomically
+    output_path = Path("windows.json")
+    temp_path = output_path.with_suffix(".tmp")
 
-    with open("isos/windows.json", "w") as f:
-        json.dump(output, f, indent=2)
+    with temp_path.open("w", encoding="utf-8") as f:
+        json.dump(data, f, indent=2, ensure_ascii=False)
+
+    temp_path.replace(output_path)
+    print(f"✅ Updated {output_path.name} at {data['last_updated']}")
 
 if __name__ == "__main__":
     main()
