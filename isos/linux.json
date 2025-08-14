@@ -1,4 +1,41 @@
 {
-  "last_updated": "2025-08-14T19:14:34Z",
-  "distros": []
+  "last_updated": "2025-08-14T19:17:31Z",
+  "distros": [
+    {
+      "name": "Debian",
+      "version": "13.0.0",
+      "arch": [
+        "x86_64"
+      ],
+      "download_url": "https://cdimage.debian.org/debian-cd/current/amd64/iso-dvd/debian-13.0.0-amd64-DVD-1.iso",
+      "checksum": {
+        "sha256": "c998fe73ca8dbce235f189a2a92873bf0a8f70b0982f361629a18a0f38b6fe92",
+        "url": "https://cdimage.debian.org/debian-cd/current/amd64/iso-dvd/SHA256SUMS"
+      }
+    },
+    {
+      "name": "Fedora Workstation",
+      "version": "41",
+      "arch": [
+        "x86_64"
+      ],
+      "download_url": "https://download.fedoraproject.org/pub/fedora/linux/releases/41/Workstation/x86_64/iso/Fedora-Workstation-Live-x86_64-41-1.4.iso",
+      "checksum": {
+        "sha256": null,
+        "url": "https://getfedora.org/static/checksums/41/Workstation/x86_64/Fedora-Workstation-Live-x86_64-41-1.4-CHECKSUM"
+      }
+    },
+    {
+      "name": "Arch Linux",
+      "version": "2025.08.01",
+      "arch": [
+        "x86_64"
+      ],
+      "download_url": "https://mirror.rackspace.com/archlinux/iso/latest/archlinux-2025.08.01-x86_64.iso",
+      "checksum": {
+        "sha256": "4b1af44dbeed97acec0204a95f6393818bb8fd903b423a20b7ea141f80b27e59",
+        "url": "https://mirror.rackspace.com/archlinux/iso/latest/sha256sums.txt"
+      }
+    }
+  ]
 }
