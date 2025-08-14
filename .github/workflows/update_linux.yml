@@ -2,29 +2,27 @@ name: Update Linux ISOs
 
 on:
   schedule:
-    - cron: "0 3 * * *"  # Every day at 03:00 UTC
-  workflow_dispatch:     # Allow manual runs
+    - cron: "0 3 * * *" # Daily at 03:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   update-linux:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.x"
 
-      - name: Install dependencies
-        run: pip install requests beautifulsoup4
+      - run: pip install requests beautifulsoup4
 
-      - name: Run updater
-        run: python scripts/update_linux.py
+      - run: python scripts/update_linux.py
 
-      - name: Commit changes
-        run: |
+      - run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git add isos/linux.json
