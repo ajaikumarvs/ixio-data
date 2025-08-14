@@ -1,6 +1,6 @@
 # Ixio ISO Auto-Updater
 
-Ixio is a cross-platform ISO fetcher that automatically retrieves the latest download links and SHA256 checksums for popular Linux distributions (and soon Windows releases).
+Ixio ISO Auto-Updater is a cross-platform ISO fetcher that automatically retrieves the latest download links and SHA256 checksums for popular Linux distributions (and soon Windows releases).
 
 This repository uses Python scripts and GitHub Actions to keep `isos/linux.json` up-to-date automatically.
 
