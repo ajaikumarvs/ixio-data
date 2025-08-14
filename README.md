@@ -81,6 +81,7 @@ git clone https://github.com/ajaikumarvs/ixio-data.git
 cd ixio-data
 
 # Install dependencies
+cd scripts
 pip install -r requirements.txt
 
 # Run the updater
@@ -100,7 +101,6 @@ Output will be saved in `isos/linux.json`.
 
 Install dependencies with:
 ```bash
-cd scripts
 pip install -r requirements.txt
 ```
 
