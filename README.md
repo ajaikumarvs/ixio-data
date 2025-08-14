@@ -95,9 +95,12 @@ Output will be saved in `isos/linux.json`.
 - Dependencies:
   - `requests`
   - `beautifulsoup4`
+  - `lxml`
+  - `python-dateutil`
 
 Install dependencies with:
 ```bash
+cd scripts
 pip install -r requirements.txt
 ```
 
