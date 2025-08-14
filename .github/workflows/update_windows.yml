@@ -1,0 +1,27 @@
+name: Update Windows ISOs
+
+on:
+  schedule:
+    - cron: "0 4 * * *" # Every day at 04:00 UTC
+  workflow_dispatch:
+
+jobs:
+  update-windows:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - run: pip install requests
+
+      - run: python scripts/update_windows.py
+
+      - run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git add isos/windows.json
+          git commit -m "chore: update Windows ISO metadata" || echo "No changes"
+          git push
