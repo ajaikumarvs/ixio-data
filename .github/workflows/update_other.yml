@@ -1,0 +1,25 @@
+name: Update Other ISOs
+
+on:
+  schedule:
+    - cron: "0 5 * * *" # Every day at 05:00 UTC
+  workflow_dispatch:
+
+jobs:
+  update-other:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - run: python scripts/update_other.py
+
+      - run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git add isos/other.json
+          git commit -m "chore: update Other ISOs" || echo "No changes"
+          git push
