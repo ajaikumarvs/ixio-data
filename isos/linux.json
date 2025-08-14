@@ -1,6 +1,18 @@
 {
-  "last_updated": "2025-08-14T19:17:31Z",
+  "last_updated": "2025-08-14T19:23:03Z",
   "distros": [
+    {
+      "name": "Ubuntu",
+      "version": "14.04.6",
+      "arch": [
+        "x86_64"
+      ],
+      "download_url": "https://releases.ubuntu.com/14.04.6/ubuntu-14.04.6-desktop-amd64.iso",
+      "checksum": {
+        "sha256": "bcc02554c37d438545658be7964e1bc05bdb11289ae16bfbf94626b80d42656f",
+        "url": "https://releases.ubuntu.com/14.04.6/SHA256SUMS"
+      }
+    },
     {
       "name": "Debian",
       "version": "13.0.0",
