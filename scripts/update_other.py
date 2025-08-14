@@ -1,0 +1,25 @@
+import json
+import datetime
+
+output = {
+    "last_updated": datetime.datetime.utcnow().replace(microsecond=0).isoformat() + "Z",
+    "distros": [
+        {
+            "name": "FreeBSD",
+            "version": "14.0",
+            "arch": ["x86_64"],
+            "download_url": "https://download.freebsd.org/releases/ISO-IMAGES/14.0/FreeBSD-14.0-RELEASE-amd64-disc1.iso",
+            "checksum_url": "https://download.freebsd.org/releases/ISO-IMAGES/14.0/CHECKSUM.SHA256-FreeBSD-14.0-RELEASE-amd64"
+        },
+        {
+            "name": "SystemRescue",
+            "version": "11.01",
+            "arch": ["x86_64"],
+            "download_url": "https://sourceforge.net/projects/systemrescuecd/files/sysresccd-x86/11.01/systemrescue-11.01-amd64.iso/download",
+            "checksum_url": "https://sourceforge.net/projects/systemrescuecd/files/sysresccd-x86/11.01/systemrescue-11.01-amd64.iso.sha256/download"
+        }
+    ]
+}
+
+with open("isos/other.json", "w") as f:
+    json.dump(output, f, indent=2)
