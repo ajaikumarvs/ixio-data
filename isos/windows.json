@@ -1,26 +1,29 @@
 {
-  "last_updated": "2025-08-15T19:00:00Z",
+  "last_updated": "2025-08-19T20:32:50Z",
   "windows": [
     {
       "name": "Windows 10",
       "version": "22H2",
       "source": "Microsoft Official",
       "download_page": "https://www.microsoft.com/software-download/windows10",
-      "direct_links": []
+      "direct_links": [],
+      "latest": true
     },
     {
       "name": "Windows 11",
       "version": "24H2",
       "source": "Microsoft Official",
       "download_page": "https://www.microsoft.com/software-download/windows11",
-      "direct_links": []
+      "direct_links": [],
+      "latest": true
     },
     {
       "name": "Windows Server 2025",
       "version": "RTM",
       "source": "Microsoft Evaluation Center",
       "download_page": "https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-2025",
-      "direct_links": []
+      "direct_links": [],
+      "latest": true
     }
   ]
 }
