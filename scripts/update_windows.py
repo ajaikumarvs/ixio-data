@@ -28,9 +28,16 @@ WINDOWS_ISOS = [
 ]
 
 def main():
+    # For now each product entry is a single version, mark it as latest
+    windows = []
+    for item in WINDOWS_ISOS:
+        entry = dict(item)
+        entry["latest"] = True
+        windows.append(entry)
+
     data = {
         "last_updated": datetime.datetime.utcnow().replace(microsecond=0).isoformat() + "Z",
-        "windows": WINDOWS_ISOS
+        "windows": windows
     }
 
     # Write atomically to isos/windows.json
