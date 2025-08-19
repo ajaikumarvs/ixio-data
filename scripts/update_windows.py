@@ -33,15 +33,15 @@ def main():
         "windows": WINDOWS_ISOS
     }
 
-    # Write atomically
-    output_path = Path("windows.json")
+    # Write atomically to isos/windows.json
+    output_path = Path("isos/windows.json")
     temp_path = output_path.with_suffix(".tmp")
 
     with temp_path.open("w", encoding="utf-8") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
 
     temp_path.replace(output_path)
-    print(f"✅ Updated {output_path.name} at {data['last_updated']}")
+    print(f"✅ Updated {output_path} at {data['last_updated']}")
 
 if __name__ == "__main__":
     main()

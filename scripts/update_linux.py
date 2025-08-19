@@ -14,18 +14,46 @@ def get_sha256_from_text(text, filename):
     return None
 
 # ------------------ Fetchers ------------------ #
-def fetch_ubuntu():
+def _parse_ubuntu_versions(index_html):
+    soup = BeautifulSoup(index_html, "html.parser")
+    versions = []
+    for a in soup.find_all('a', href=True):
+        href = a['href']
+        # versions like 24.04.1/, 22.04.5/
+        if re.fullmatch(r"\d+\.\d+(?:\.\d+)?/", href):
+            versions.append(href.strip('/'))
+    # sort versions numerically by parts
+    def key(v):
+        return tuple(int(p) for p in v.split('.'))
+    versions = sorted(set(versions), key=key)
+    return versions
+
+def fetch_ubuntu(max_versions: int = 3):
+    """Return up to max_versions latest Ubuntu desktop x86_64 ISOs (latest first)."""
     base_url = "https://releases.ubuntu.com/"
     html = requests.get(base_url, timeout=15).text
-    soup = BeautifulSoup(html, "html.parser")
-    link = next((a['href'] for a in soup.find_all('a', href=True) if re.match(r'\d+\.\d+', a['href'])), None)
-    if not link: return None
-    version = link.strip("/")
-    iso_name = f"ubuntu-{version}-desktop-amd64.iso"
-    iso_url = f"{base_url}{version}/{iso_name}"
-    checksum_url = f"{base_url}{version}/SHA256SUMS"
-    sha256 = get_sha256_from_text(requests.get(checksum_url).text, iso_name)
-    return {"name": "Ubuntu", "version": version, "arch": ["x86_64"], "download_url": iso_url, "checksum": {"sha256": sha256, "url": checksum_url}}
+    versions = _parse_ubuntu_versions(html)
+    if not versions:
+        return None
+    selected = list(reversed(versions))[:max_versions]
+    out = []
+    for version in selected:
+        iso_name = f"ubuntu-{version}-desktop-amd64.iso"
+        iso_url = f"{base_url}{version}/{iso_name}"
+        checksum_url = f"{base_url}{version}/SHA256SUMS"
+        try:
+            sha_text = requests.get(checksum_url, timeout=15).text
+            sha256 = get_sha256_from_text(sha_text, iso_name)
+        except Exception:
+            sha256 = None
+        out.append({
+            "name": "Ubuntu",
+            "version": version,
+            "arch": ["x86_64"],
+            "download_url": iso_url,
+            "checksum": {"sha256": sha256, "url": checksum_url}
+        })
+    return out
 
 def fetch_debian():
     base_url = "https://cdimage.debian.org/debian-cd/current/amd64/iso-dvd/"
@@ -198,7 +226,11 @@ def main():
     for f in fetchers:
         try:
             data = f()
-            if data:
+            if not data:
+                continue
+            if isinstance(data, list):
+                output["distros"].extend(data)
+            else:
                 output["distros"].append(data)
         except Exception as e:
             print(f"Error fetching {f.__name__}: {e}")
