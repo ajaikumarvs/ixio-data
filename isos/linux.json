@@ -1,16 +1,40 @@
 {
-  "last_updated": "2025-08-19T03:40:16Z",
+  "last_updated": "2025-08-19T20:15:20Z",
   "distros": [
     {
       "name": "Ubuntu",
-      "version": "14.04.6",
+      "version": "25.04",
       "arch": [
         "x86_64"
       ],
-      "download_url": "https://releases.ubuntu.com/14.04.6/ubuntu-14.04.6-desktop-amd64.iso",
+      "download_url": "https://releases.ubuntu.com/25.04/ubuntu-25.04-desktop-amd64.iso",
       "checksum": {
-        "sha256": "bcc02554c37d438545658be7964e1bc05bdb11289ae16bfbf94626b80d42656f",
-        "url": "https://releases.ubuntu.com/14.04.6/SHA256SUMS"
+        "sha256": "b87366b62eddfbecb60e681ba83299c61884a0d97569abe797695c8861f5dea4",
+        "url": "https://releases.ubuntu.com/25.04/SHA256SUMS"
+      }
+    },
+    {
+      "name": "Ubuntu",
+      "version": "24.04.3",
+      "arch": [
+        "x86_64"
+      ],
+      "download_url": "https://releases.ubuntu.com/24.04.3/ubuntu-24.04.3-desktop-amd64.iso",
+      "checksum": {
+        "sha256": "faabcf33ae53976d2b8207a001ff32f4e5daae013505ac7188c9ea63988f8328",
+        "url": "https://releases.ubuntu.com/24.04.3/SHA256SUMS"
+      }
+    },
+    {
+      "name": "Ubuntu",
+      "version": "24.04.2",
+      "arch": [
+        "x86_64"
+      ],
+      "download_url": "https://releases.ubuntu.com/24.04.2/ubuntu-24.04.2-desktop-amd64.iso",
+      "checksum": {
+        "sha256": null,
+        "url": "https://releases.ubuntu.com/24.04.2/SHA256SUMS"
       }
     },
     {
