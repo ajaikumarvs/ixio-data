@@ -1,5 +1,5 @@
 {
-  "last_updated": "2025-08-19T20:15:20Z",
+  "last_updated": "2025-08-19T20:28:15Z",
   "distros": [
     {
       "name": "Ubuntu",
@@ -11,7 +11,8 @@
       "checksum": {
         "sha256": "b87366b62eddfbecb60e681ba83299c61884a0d97569abe797695c8861f5dea4",
         "url": "https://releases.ubuntu.com/25.04/SHA256SUMS"
-      }
+      },
+      "latest": true
     },
     {
       "name": "Ubuntu",
@@ -47,7 +48,8 @@
       "checksum": {
         "sha256": "c998fe73ca8dbce235f189a2a92873bf0a8f70b0982f361629a18a0f38b6fe92",
         "url": "https://cdimage.debian.org/debian-cd/current/amd64/iso-dvd/SHA256SUMS"
-      }
+      },
+      "latest": true
     },
     {
       "name": "Fedora Workstation",
@@ -59,7 +61,8 @@
       "checksum": {
         "sha256": null,
         "url": "https://getfedora.org/static/checksums/41/Workstation/x86_64/Fedora-Workstation-Live-x86_64-41-1.4-CHECKSUM"
-      }
+      },
+      "latest": true
     },
     {
       "name": "Arch Linux",
@@ -71,7 +74,8 @@
       "checksum": {
         "sha256": "4b1af44dbeed97acec0204a95f6393818bb8fd903b423a20b7ea141f80b27e59",
         "url": "https://mirror.rackspace.com/archlinux/iso/latest/sha256sums.txt"
-      }
+      },
+      "latest": true
     }
   ]
 }
