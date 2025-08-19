@@ -18,7 +18,7 @@ jobs:
         with:
           python-version: "3.x"
 
-      - run: pip install requests beautifulsoup4
+      - run: pip install -r scripts/requirements.txt
 
       - run: python scripts/update_linux.py
 
