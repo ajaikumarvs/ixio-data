@@ -215,13 +215,192 @@ def fetch_cachyos():
     version = re.search(r'CachyOS-([0-9.]+)-', iso_name).group(1)
     return {"name": "CachyOS", "version": version, "arch": ["x86_64"], "download_url": iso_url, "checksum": {"sha256": sha256, "url": checksum_url}}
 
+# --- Additional requested distros --- #
+def fetch_endeavouros():
+    # Use GitHub releases latest page to find ISO and sums
+    url = "https://github.com/endeavouros-team/ISO/releases/latest"
+    html = requests.get(url, timeout=15, headers={"User-Agent": "ixio-bot"}).text
+    iso_match = re.search(r'href="([^"]+\.iso)"', html)
+    if not iso_match:
+        return None
+    href = iso_match.group(1)
+    if href.startswith("/"):
+        iso_url = "https://github.com" + href
+    else:
+        iso_url = href
+    # Try to extract version from filename
+    iso_name = iso_url.split("/")[-1]
+    ver_match = re.search(r"(\d{4}\.\d{2}|\d+\.\d+)", iso_name)
+    version = ver_match.group(1) if ver_match else "latest"
+    checksum_url = url
+    return {"name": "EndeavourOS", "version": version, "arch": ["x86_64"], "download_url": iso_url, "checksum": {"sha256": None, "url": checksum_url}}
+
+def fetch_parrot():
+    base = "https://mirror.parrot.sh/parrot/iso/rolling/"
+    html = requests.get(base, timeout=15).text
+    m = re.search(r'(Parrot-home-rolling-.*?_amd64\.iso)', html)
+    if not m:
+        return None
+    iso_name = m.group(1)
+    iso_url = base + iso_name
+    # common sums file name
+    checksum_url = base + "SHA256SUMS"
+    try:
+        sha256 = get_sha256_from_text(requests.get(checksum_url, timeout=15).text, iso_name)
+    except Exception:
+        sha256 = None
+    ver = re.search(r'Parrot-home-rolling-([0-9.]+)-', iso_name)
+    version = ver.group(1) if ver else "rolling"
+    return {"name": "Parrot Security OS", "version": version, "arch": ["x86_64"], "download_url": iso_url, "checksum": {"sha256": sha256, "url": checksum_url}}
+
+def fetch_tails():
+    base = "https://mirrors.edge.kernel.org/tails/stable/"
+    html = requests.get(base, timeout=15).text
+    versions = re.findall(r'href="([0-9.]+)/"', html)
+    if not versions:
+        return None
+    # pick highest numeric version
+    def key(v):
+        return tuple(int(p) for p in v.split('.'))
+    version = sorted(set(versions), key=key)[-1]
+    folder = f"{base}{version}/"
+    html = requests.get(folder, timeout=15).text
+    m = re.search(r'(tails-amd64-.*?\.iso)', html)
+    if not m:
+        return None
+    iso_name = m.group(1)
+    iso_url = folder + iso_name
+    # Tails provides .iso.sha256sum per file
+    checksum_url = iso_url + ".sha256sum"
+    try:
+        sha_text = requests.get(checksum_url, timeout=15).text
+        sha256 = sha_text.split()[0] if sha_text else None
+    except Exception:
+        sha256 = None
+    return {"name": "Tails", "version": version, "arch": ["x86_64"], "download_url": iso_url, "checksum": {"sha256": sha256, "url": checksum_url}}
+
+def fetch_qubes():
+    base = "https://ftp.qubes-os.org/iso/"
+    html = requests.get(base, timeout=15).text
+    m = re.search(r'(Qubes-R[0-9.]+-x86_64\.iso)', html)
+    if not m:
+        return None
+    iso_name = m.group(1)
+    iso_url = base + iso_name
+    checksum_url = base + "SHA256SUMS"
+    try:
+        sha256 = get_sha256_from_text(requests.get(checksum_url, timeout=15).text, iso_name)
+    except Exception:
+        sha256 = None
+    ver = re.search(r'Qubes-R([0-9.]+)-', iso_name)
+    version = ver.group(1) if ver else "R"
+    return {"name": "Qubes OS", "version": version, "arch": ["x86_64"], "download_url": iso_url, "checksum": {"sha256": sha256, "url": checksum_url}}
+
+def fetch_puppy():
+    base = "https://distro.ibiblio.org/puppylinux/puppy64/"
+    html = requests.get(base, timeout=15).text
+    dirs = re.findall(r'href="([^\"]+/)"', html)
+    dirs = [d for d in dirs if d not in ("../",) and not d.startswith("?")]
+    if not dirs:
+        return None
+    # choose last dir alphabetically as heuristic
+    folder = base + sorted(dirs)[-1]
+    listing = requests.get(folder, timeout=15).text
+    m = re.search(r'([A-Za-z0-9_.-]*puppy.*64.*?\.iso)', listing)
+    if not m:
+        return None
+    iso_name = m.group(1)
+    iso_url = folder + iso_name
+    version = re.search(r'([0-9.]+)', iso_name)
+    ver = version.group(1) if version else "latest"
+    return {"name": "Puppy Linux", "version": ver, "arch": ["x86_64"], "download_url": iso_url, "checksum": {"sha256": None, "url": folder}}
+
+def fetch_garuda():
+    # Try common latest path on Chaotic mirror
+    base = "https://geo-mirror.chaotic.cx/iso/latest/garuda/dr460nized/"
+    html = requests.get(base, timeout=15).text
+    m = re.search(r'(garuda-dr460nized-linux-.*?\.iso)', html)
+    if not m:
+        return None
+    iso_name = m.group(1)
+    iso_url = base + iso_name
+    ver = re.search(r'([0-9]{8})', iso_name)
+    version = ver.group(1) if ver else "latest"
+    checksum_url = iso_url + ".sha256"
+    try:
+        sha256 = requests.get(checksum_url, timeout=15).text.split()[0]
+    except Exception:
+        sha256 = None
+    return {"name": "Garuda Linux", "version": version, "arch": ["x86_64"], "download_url": iso_url, "checksum": {"sha256": sha256, "url": checksum_url}}
+
+def fetch_rocky():
+    base = "https://download.rockylinux.org/pub/rocky/9/isos/x86_64/"
+    html = requests.get(base, timeout=15).text
+    m = re.search(r'(Rocky-[0-9.]+-x86_64-dvd\.iso)', html)
+    if not m:
+        return None
+    iso_name = m.group(1)
+    iso_url = base + iso_name
+    checksum_url = base + "CHECKSUM"
+    try:
+        sha256 = get_sha256_from_text(requests.get(checksum_url, timeout=15).text, iso_name)
+    except Exception:
+        sha256 = None
+    ver = re.search(r'Rocky-([0-9.]+)-', iso_name)
+    version = ver.group(1) if ver else "9"
+    return {"name": "Rocky Linux", "version": version, "arch": ["x86_64"], "download_url": iso_url, "checksum": {"sha256": sha256, "url": checksum_url}}
+
+def fetch_almalinux():
+    base = "https://repo.almalinux.org/almalinux/9/isos/x86_64/"
+    html = requests.get(base, timeout=15).text
+    m = re.search(r'(AlmaLinux-[0-9.]+-x86_64-dvd\.iso)', html)
+    if not m:
+        return None
+    iso_name = m.group(1)
+    iso_url = base + iso_name
+    checksum_url = base + "CHECKSUM"
+    try:
+        sha256 = get_sha256_from_text(requests.get(checksum_url, timeout=15).text, iso_name)
+    except Exception:
+        sha256 = None
+    ver = re.search(r'AlmaLinux-([0-9.]+)-', iso_name)
+    version = ver.group(1) if ver else "9"
+    return {"name": "AlmaLinux", "version": version, "arch": ["x86_64"], "download_url": iso_url, "checksum": {"sha256": sha256, "url": checksum_url}}
+
+def fetch_nixos():
+    # Find latest stable nixos version and use latest GNOME ISO
+    index = requests.get("https://releases.nixos.org/?prefix=nixos/", timeout=15).text
+    versions = re.findall(r'nixos/([0-9]{2}\.[0-9]{2})/', index)
+    if not versions:
+        return None
+    version = sorted(set(versions), key=lambda v: tuple(map(int, v.split('.'))))[-1]
+    base = f"https://channels.nixos.org/nixos-{version}/"
+    iso_url = base + "latest-nixos-gnome-x86_64-linux.iso"
+    # NixOS posts hash in narinfo, but we link to base channel
+    checksum_url = base
+    return {"name": "NixOS", "version": version, "arch": ["x86_64"], "download_url": iso_url, "checksum": {"sha256": None, "url": checksum_url}}
+
+def fetch_clearlinux():
+    base = "https://cdn.download.clearlinux.org/releases/latest/clear/ISO/"
+    html = requests.get(base, timeout=15).text
+    m = re.search(r'(clear-[0-9]+-live-desktop\.iso)', html)
+    if not m:
+        return None
+    iso_name = m.group(1)
+    iso_url = base + iso_name
+    checksum_url = base + "SHA512SUMS"
+    # SHA512 provided; leave sha256 None but link sums
+    return {"name": "Clear Linux", "version": re.search(r'clear-([0-9]+)-', iso_name).group(1), "arch": ["x86_64"], "download_url": iso_url, "checksum": {"sha256": None, "url": checksum_url}}
+
 # ------------------ Main ------------------ #
 def main():
     output = {"last_updated": datetime.datetime.utcnow().replace(microsecond=0).isoformat() + "Z", "distros": []}
     fetchers = [
         fetch_ubuntu, fetch_debian, fetch_fedora, fetch_arch, fetch_linuxmint, fetch_manjaro,
         fetch_opensuse_tumbleweed, fetch_opensuse_leap, fetch_popos, fetch_elementary,
-        fetch_zorin, fetch_mxlinux, fetch_kali, fetch_cachyos
+        fetch_zorin, fetch_mxlinux, fetch_kali, fetch_cachyos,
+        fetch_endeavouros, fetch_parrot, fetch_tails, fetch_qubes, fetch_puppy,
+        fetch_garuda, fetch_rocky, fetch_almalinux, fetch_nixos, fetch_clearlinux
     ]
     for f in fetchers:
         try:
