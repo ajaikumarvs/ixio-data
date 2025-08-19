@@ -1,5 +1,5 @@
 {
-  "last_updated": "2025-08-19T20:28:15Z",
+  "last_updated": "2025-08-19T20:54:26Z",
   "distros": [
     {
       "name": "Ubuntu",
@@ -74,6 +74,45 @@
       "checksum": {
         "sha256": "4b1af44dbeed97acec0204a95f6393818bb8fd903b423a20b7ea141f80b27e59",
         "url": "https://mirror.rackspace.com/archlinux/iso/latest/sha256sums.txt"
+      },
+      "latest": true
+    },
+    {
+      "name": "Qubes OS",
+      "version": "4.0",
+      "arch": [
+        "x86_64"
+      ],
+      "download_url": "https://ftp.qubes-os.org/iso/Qubes-R4.0-x86_64.iso",
+      "checksum": {
+        "sha256": null,
+        "url": "https://ftp.qubes-os.org/iso/SHA256SUMS"
+      },
+      "latest": true
+    },
+    {
+      "name": "Rocky Linux",
+      "version": "9.6",
+      "arch": [
+        "x86_64"
+      ],
+      "download_url": "https://download.rockylinux.org/pub/rocky/9/isos/x86_64/Rocky-9.6-x86_64-dvd.iso",
+      "checksum": {
+        "sha256": "8ff2a47e2f3bfe442617fceb7ef289b7b1d2d0502089dbbd505d5368b2b3a90f",
+        "url": "https://download.rockylinux.org/pub/rocky/9/isos/x86_64/CHECKSUM"
+      },
+      "latest": true
+    },
+    {
+      "name": "AlmaLinux",
+      "version": "9.6",
+      "arch": [
+        "x86_64"
+      ],
+      "download_url": "https://repo.almalinux.org/almalinux/9/isos/x86_64/AlmaLinux-9.6-x86_64-dvd.iso",
+      "checksum": {
+        "sha256": "db7b45e071b6319d43781eb8d9bec9b8d6b0ac41ad5e49db7fe113c76f0d2ca2",
+        "url": "https://repo.almalinux.org/almalinux/9/isos/x86_64/CHECKSUM"
       },
       "latest": true
     }
