@@ -234,6 +234,31 @@ def main():
                 output["distros"].append(data)
         except Exception as e:
             print(f"Error fetching {f.__name__}: {e}")
+    # mark latest per distro name
+    by_name = {}
+    for idx, item in enumerate(output["distros"]):
+        name = item.get("name", "")
+        if not name:
+            continue
+        # build a sortable key from version like 24.04.1 or 2025.08.01; fallback to original order
+        ver = str(item.get("version", ""))
+        def parse_ver(v: str):
+            parts = []
+            for p in re.split(r"[^0-9]+", v):
+                if p.isdigit():
+                    try:
+                        parts.append(int(p))
+                    except Exception:
+                        parts.append(0)
+            return tuple(parts) if parts else (0,)
+        key = (parse_ver(ver), idx)
+        if name not in by_name or key > by_name[name][0]:
+            by_name[name] = (key, idx)
+    for name, (_key, idx) in by_name.items():
+        try:
+            output["distros"][idx]["latest"] = True
+        except Exception:
+            pass
     with open("isos/linux.json", "w") as fp:
         json.dump(output, fp, indent=2)
 
