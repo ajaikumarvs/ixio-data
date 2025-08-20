@@ -87,33 +87,69 @@ def fetch_arch():
     version = iso_name.split("-")[1]
     return {"name": "Arch Linux", "version": version, "arch": ["x86_64"], "download_url": iso_url, "checksum": {"sha256": sha256, "url": checksum_url}}
 
-def fetch_linuxmint():
+def fetch_linuxmint(max_versions: int = 2):
     base_url = "https://mirrors.edge.kernel.org/linuxmint/stable/"
     html = requests.get(base_url, timeout=15).text
     versions = re.findall(r'href="(\d+\.\d+)/"', html)
-    if not versions: return None
-    version = sorted(versions, key=lambda v: list(map(int, v.split('.'))))[-1]
-    folder = f"{base_url}{version}/"
-    html = requests.get(folder).text
-    match = re.search(r'(linuxmint-\d+-cinnamon-64bit\.iso)', html)
-    if not match: return None
-    iso_name = match.group(1)
-    iso_url = folder + iso_name
-    checksum_url = folder + "sha256sum.txt"
-    sha256 = get_sha256_from_text(requests.get(checksum_url).text, iso_name)
-    return {"name": "Linux Mint Cinnamon", "version": version, "arch": ["x86_64"], "download_url": iso_url, "checksum": {"sha256": sha256, "url": checksum_url}}
+    if not versions:
+        return None
+    ordered = sorted(versions, key=lambda v: tuple(map(int, v.split('.'))))
+    selected = list(reversed(ordered))[:max_versions]
+    out = []
+    for version in selected:
+        folder = f"{base_url}{version}/"
+        listing = requests.get(folder, timeout=15).text
+        m = re.search(r'(linuxmint-\d+-cinnamon-64bit\.iso)', listing)
+        if not m:
+            continue
+        iso_name = m.group(1)
+        iso_url = folder + iso_name
+        checksum_url = folder + "sha256sum.txt"
+        try:
+            sha256 = get_sha256_from_text(requests.get(checksum_url, timeout=15).text, iso_name)
+        except Exception:
+            sha256 = None
+        out.append({
+            "name": "Linux Mint Cinnamon",
+            "version": version,
+            "arch": ["x86_64"],
+            "download_url": iso_url,
+            "checksum": {"sha256": sha256, "url": checksum_url}
+        })
+    return out or None
 
-def fetch_manjaro():
+def fetch_manjaro(max_versions: int = 2):
     base_url = "https://download.manjaro.org/kde/"
     html = requests.get(base_url, timeout=15).text
-    match = re.search(r'(manjaro-kde-[0-9.]+-minimal-.*-x86_64\.iso)', html)
-    if not match: return None
-    iso_name = match.group(1)
-    iso_url = base_url + iso_name
-    checksum_url = iso_url + ".sha256"
-    sha256 = requests.get(checksum_url).text.split()[0]
-    version = re.search(r'manjaro-kde-([0-9.]+)-', iso_name).group(1)
-    return {"name": "Manjaro KDE", "version": version, "arch": ["x86_64"], "download_url": iso_url, "checksum": {"sha256": sha256, "url": checksum_url}}
+    # collect multiple matches
+    matches = re.findall(r"(manjaro-kde-([0-9.]+)-[^\s\"']*-x86_64\.iso)", html)
+    if not matches:
+        return None
+    # unique by version
+    by_ver = {}
+    for full, ver in matches:
+        by_ver[ver] = full
+    def key(v):
+        return tuple(int(p) for p in v.split('.'))
+    ordered = sorted(by_ver.keys(), key=key)
+    selected = list(reversed(ordered))[:max_versions]
+    out = []
+    for ver in selected:
+        iso_name = by_ver[ver]
+        iso_url = base_url + iso_name
+        checksum_url = iso_url + ".sha256"
+        try:
+            sha256 = requests.get(checksum_url, timeout=15).text.split()[0]
+        except Exception:
+            sha256 = None
+        out.append({
+            "name": "Manjaro KDE",
+            "version": ver,
+            "arch": ["x86_64"],
+            "download_url": iso_url,
+            "checksum": {"sha256": sha256, "url": checksum_url}
+        })
+    return out or None
 
 def fetch_opensuse_tumbleweed():
     base_url = "https://download.opensuse.org/tumbleweed/iso/"
@@ -127,33 +163,68 @@ def fetch_opensuse_tumbleweed():
     version = re.search(r'([0-9]+)\.iso', iso_name).group(1)
     return {"name": "openSUSE Tumbleweed", "version": version, "arch": ["x86_64"], "download_url": iso_url, "checksum": {"sha256": sha256, "url": checksum_url}}
 
-def fetch_opensuse_leap():
+def fetch_opensuse_leap(max_versions: int = 2):
     base_url = "https://download.opensuse.org/distribution/leap/"
     html = requests.get(base_url, timeout=15).text
     versions = re.findall(r'href="(\d+\.\d+)/"', html)
-    if not versions: return None
-    version = sorted(versions, key=lambda v: list(map(int, v.split('.'))))[-1]
-    folder = f"{base_url}{version}/iso/"
-    html = requests.get(folder).text
-    match = re.search(r'(openSUSE-Leap-[0-9.]+-DVD-x86_64\.iso)', html)
-    if not match: return None
-    iso_name = match.group(1)
-    iso_url = folder + iso_name
-    checksum_url = iso_url + ".sha256"
-    sha256 = requests.get(checksum_url).text.split()[0]
-    return {"name": "openSUSE Leap", "version": version, "arch": ["x86_64"], "download_url": iso_url, "checksum": {"sha256": sha256, "url": checksum_url}}
+    if not versions:
+        return None
+    ordered = sorted(versions, key=lambda v: tuple(map(int, v.split('.'))))
+    selected = list(reversed(ordered))[:max_versions]
+    out = []
+    for version in selected:
+        folder = f"{base_url}{version}/iso/"
+        listing = requests.get(folder, timeout=15).text
+        m = re.search(r'(openSUSE-Leap-[0-9.]+-DVD-x86_64\.iso)', listing)
+        if not m:
+            continue
+        iso_name = m.group(1)
+        iso_url = folder + iso_name
+        checksum_url = iso_url + ".sha256"
+        try:
+            sha256 = requests.get(checksum_url, timeout=15).text.split()[0]
+        except Exception:
+            sha256 = None
+        out.append({
+            "name": "openSUSE Leap",
+            "version": version,
+            "arch": ["x86_64"],
+            "download_url": iso_url,
+            "checksum": {"sha256": sha256, "url": checksum_url}
+        })
+    return out or None
 
-def fetch_popos():
+def fetch_popos(max_versions: int = 2):
     base_url = "https://pop-iso.sfo2.cdn.digitaloceanspaces.com/"
     html = requests.get(base_url, timeout=15).text
-    match = re.search(r'(pop-os_[0-9.]+_amd64_intel_.*\.iso)', html)
-    if not match: return None
-    iso_name = match.group(1)
-    iso_url = base_url + iso_name
-    checksum_url = iso_url + ".sha256"
-    sha256 = requests.get(checksum_url).text.strip()
-    version = re.search(r'pop-os_([0-9.]+)_', iso_name).group(1)
-    return {"name": "Pop!_OS", "version": version, "arch": ["x86_64"], "download_url": iso_url, "checksum": {"sha256": sha256, "url": checksum_url}}
+    matches = re.findall(r"(pop-os_([0-9.]+)_amd64_intel_[^\s\"']*\.iso)", html)
+    if not matches:
+        return None
+    # prefer unique versions
+    by_ver = {}
+    for full, ver in matches:
+        by_ver[ver] = full
+    def key(v):
+        return tuple(int(p) for p in v.split('.'))
+    ordered = sorted(by_ver.keys(), key=key)
+    selected = list(reversed(ordered))[:max_versions]
+    out = []
+    for ver in selected:
+        iso_name = by_ver[ver]
+        iso_url = base_url + iso_name
+        checksum_url = iso_url + ".sha256"
+        try:
+            sha256 = requests.get(checksum_url, timeout=15).text.strip().split()[0]
+        except Exception:
+            sha256 = None
+        out.append({
+            "name": "Pop!_OS",
+            "version": ver,
+            "arch": ["x86_64"],
+            "download_url": iso_url,
+            "checksum": {"sha256": sha256, "url": checksum_url}
+        })
+    return out or None
 
 def fetch_elementary():
     base_url = "https://mirror.elementary.io/iso/"
@@ -167,17 +238,36 @@ def fetch_elementary():
     version = re.search(r'elementaryos-([0-9.]+)-', iso_name).group(1)
     return {"name": "elementary OS", "version": version, "arch": ["x86_64"], "download_url": iso_url, "checksum": {"sha256": sha256, "url": checksum_url}}
 
-def fetch_zorin():
+def fetch_zorin(max_versions: int = 2):
     base_url = "https://mirrors.edge.kernel.org/zorinos-isos/stable/"
     html = requests.get(base_url, timeout=15).text
-    match = re.search(r'(Zorin-OS-[0-9.]+-Core-64-bit\.iso)', html)
-    if not match: return None
-    iso_name = match.group(1)
-    iso_url = base_url + iso_name
-    checksum_url = base_url + "SHA256SUMS"
-    sha256 = get_sha256_from_text(requests.get(checksum_url).text, iso_name)
-    version = re.search(r'Zorin-OS-([0-9.]+)-', iso_name).group(1)
-    return {"name": "Zorin OS", "version": version, "arch": ["x86_64"], "download_url": iso_url, "checksum": {"sha256": sha256, "url": checksum_url}}
+    matches = re.findall(r'(Zorin-OS-([0-9.]+)-Core-64-bit\.iso)', html)
+    if not matches:
+        return None
+    by_ver = {}
+    for full, ver in matches:
+        by_ver[ver] = full
+    def key(v):
+        return tuple(int(p) for p in v.split('.'))
+    ordered = sorted(by_ver.keys(), key=key)
+    selected = list(reversed(ordered))[:max_versions]
+    out = []
+    for ver in selected:
+        iso_name = by_ver[ver]
+        iso_url = base_url + iso_name
+        checksum_url = base_url + "SHA256SUMS"
+        try:
+            sha256 = get_sha256_from_text(requests.get(checksum_url, timeout=15).text, iso_name)
+        except Exception:
+            sha256 = None
+        out.append({
+            "name": "Zorin OS",
+            "version": ver,
+            "arch": ["x86_64"],
+            "download_url": iso_url,
+            "checksum": {"sha256": sha256, "url": checksum_url}
+        })
+    return out or None
 
 def fetch_mxlinux():
     base_url = "https://mxlinux.org/iso/"
@@ -253,31 +343,39 @@ def fetch_parrot():
     version = ver.group(1) if ver else "rolling"
     return {"name": "Parrot Security OS", "version": version, "arch": ["x86_64"], "download_url": iso_url, "checksum": {"sha256": sha256, "url": checksum_url}}
 
-def fetch_tails():
+def fetch_tails(max_versions: int = 2):
     base = "https://mirrors.edge.kernel.org/tails/stable/"
     html = requests.get(base, timeout=15).text
     versions = re.findall(r'href="([0-9.]+)/"', html)
     if not versions:
         return None
-    # pick highest numeric version
     def key(v):
         return tuple(int(p) for p in v.split('.'))
-    version = sorted(set(versions), key=key)[-1]
-    folder = f"{base}{version}/"
-    html = requests.get(folder, timeout=15).text
-    m = re.search(r'(tails-amd64-.*?\.iso)', html)
-    if not m:
-        return None
-    iso_name = m.group(1)
-    iso_url = folder + iso_name
-    # Tails provides .iso.sha256sum per file
-    checksum_url = iso_url + ".sha256sum"
-    try:
-        sha_text = requests.get(checksum_url, timeout=15).text
-        sha256 = sha_text.split()[0] if sha_text else None
-    except Exception:
-        sha256 = None
-    return {"name": "Tails", "version": version, "arch": ["x86_64"], "download_url": iso_url, "checksum": {"sha256": sha256, "url": checksum_url}}
+    ordered = sorted(set(versions), key=key)
+    selected = list(reversed(ordered))[:max_versions]
+    out = []
+    for version in selected:
+        folder = f"{base}{version}/"
+        listing = requests.get(folder, timeout=15).text
+        m = re.search(r"(tails-amd64-[^\s\"']*?\.iso)", listing)
+        if not m:
+            continue
+        iso_name = m.group(1)
+        iso_url = folder + iso_name
+        checksum_url = iso_url + ".sha256sum"
+        try:
+            sha_text = requests.get(checksum_url, timeout=15).text
+            sha256 = sha_text.split()[0] if sha_text else None
+        except Exception:
+            sha256 = None
+        out.append({
+            "name": "Tails",
+            "version": version,
+            "arch": ["x86_64"],
+            "download_url": iso_url,
+            "checksum": {"sha256": sha256, "url": checksum_url}
+        })
+    return out or None
 
 def fetch_qubes():
     base = "https://ftp.qubes-os.org/iso/"
@@ -367,30 +465,53 @@ def fetch_almalinux():
     version = ver.group(1) if ver else "9"
     return {"name": "AlmaLinux", "version": version, "arch": ["x86_64"], "download_url": iso_url, "checksum": {"sha256": sha256, "url": checksum_url}}
 
-def fetch_nixos():
-    # Find latest stable nixos version and use latest GNOME ISO
+def fetch_nixos(max_versions: int = 2):
+    # Find stable nixos versions and use latest GNOME ISO per version
     index = requests.get("https://releases.nixos.org/?prefix=nixos/", timeout=15).text
     versions = re.findall(r'nixos/([0-9]{2}\.[0-9]{2})/', index)
     if not versions:
         return None
-    version = sorted(set(versions), key=lambda v: tuple(map(int, v.split('.'))))[-1]
-    base = f"https://channels.nixos.org/nixos-{version}/"
-    iso_url = base + "latest-nixos-gnome-x86_64-linux.iso"
-    # NixOS posts hash in narinfo, but we link to base channel
-    checksum_url = base
-    return {"name": "NixOS", "version": version, "arch": ["x86_64"], "download_url": iso_url, "checksum": {"sha256": None, "url": checksum_url}}
+    ordered = sorted(set(versions), key=lambda v: tuple(map(int, v.split('.'))))
+    selected = list(reversed(ordered))[:max_versions]
+    out = []
+    for version in selected:
+        base = f"https://channels.nixos.org/nixos-{version}/"
+        iso_url = base + "latest-nixos-gnome-x86_64-linux.iso"
+        checksum_url = base
+        out.append({
+            "name": "NixOS",
+            "version": version,
+            "arch": ["x86_64"],
+            "download_url": iso_url,
+            "checksum": {"sha256": None, "url": checksum_url}
+        })
+    return out or None
 
-def fetch_clearlinux():
-    base = "https://cdn.download.clearlinux.org/releases/latest/clear/ISO/"
-    html = requests.get(base, timeout=15).text
-    m = re.search(r'(clear-[0-9]+-live-desktop\.iso)', html)
-    if not m:
+def fetch_clearlinux(max_versions: int = 2):
+    index = requests.get("https://cdn.download.clearlinux.org/releases/", timeout=15).text
+    rels = re.findall(r'href="([0-9]+)/"', index)
+    if not rels:
         return None
-    iso_name = m.group(1)
-    iso_url = base + iso_name
-    checksum_url = base + "SHA512SUMS"
-    # SHA512 provided; leave sha256 None but link sums
-    return {"name": "Clear Linux", "version": re.search(r'clear-([0-9]+)-', iso_name).group(1), "arch": ["x86_64"], "download_url": iso_url, "checksum": {"sha256": None, "url": checksum_url}}
+    ordered = sorted({int(r) for r in rels})
+    selected = list(reversed(ordered))[:max_versions]
+    out = []
+    for rel in selected:
+        base = f"https://cdn.download.clearlinux.org/releases/{rel}/clear/ISO/"
+        listing = requests.get(base, timeout=15).text
+        m = re.search(r'(clear-[0-9]+-live-desktop\.iso)', listing)
+        if not m:
+            continue
+        iso_name = m.group(1)
+        iso_url = base + iso_name
+        checksum_url = base + "SHA512SUMS"
+        out.append({
+            "name": "Clear Linux",
+            "version": str(rel),
+            "arch": ["x86_64"],
+            "download_url": iso_url,
+            "checksum": {"sha256": None, "url": checksum_url}
+        })
+    return out or None
 
 # ------------------ Main ------------------ #
 def main():

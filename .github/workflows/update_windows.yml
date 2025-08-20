@@ -1,9 +1,16 @@
 name: Update Windows ISOs
 
 on:
+  push:
+    paths:
+      - 'ixio-data/**'
   schedule:
     - cron: "0 4 * * *" # Every day at 04:00 UTC
   workflow_dispatch:
+
+defaults:
+  run:
+    working-directory: ixio-data
 
 jobs:
   update-windows:
@@ -15,7 +22,7 @@ jobs:
         with:
           python-version: "3.x"
 
-      - run: pip install requests
+      - run: pip install -r scripts/requirements.txt
 
       - run: python scripts/update_windows.py
 
