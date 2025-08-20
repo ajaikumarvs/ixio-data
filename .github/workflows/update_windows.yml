@@ -1,7 +1,6 @@
 name: Update Windows ISOs
 
 on:
-  push:
   schedule:
     - cron: "0 4 * * *" # Every day at 04:00 UTC
   workflow_dispatch:
