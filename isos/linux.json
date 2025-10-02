@@ -1,5 +1,5 @@
 {
-  "last_updated": "2025-10-01T03:40:46Z",
+  "last_updated": "2025-10-02T03:27:35Z",
   "distros": [
     {
       "name": "Ubuntu",
@@ -66,13 +66,13 @@
     },
     {
       "name": "Arch Linux",
-      "version": "2025.09.01",
+      "version": "2025.10.01",
       "arch": [
         "x86_64"
       ],
-      "download_url": "https://mirror.rackspace.com/archlinux/iso/latest/archlinux-2025.09.01-x86_64.iso",
+      "download_url": "https://mirror.rackspace.com/archlinux/iso/latest/archlinux-2025.10.01-x86_64.iso",
       "checksum": {
-        "sha256": "961002fab836819b599e770aa25ff02bff1697d1d051140062066a5ff47d6712",
+        "sha256": "86bde4fa571579120190a0946d54cd2b3a8bf834ef5c95ed6f26fbb59104ea1d",
         "url": "https://mirror.rackspace.com/archlinux/iso/latest/sha256sums.txt"
       },
       "latest": true
