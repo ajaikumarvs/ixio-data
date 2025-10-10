@@ -1,5 +1,5 @@
 {
-  "last_updated": "2025-10-09T03:30:40Z",
+  "last_updated": "2025-10-10T03:30:56Z",
   "distros": [
     {
       "name": "Ubuntu",
@@ -9,7 +9,7 @@
       ],
       "download_url": "https://releases.ubuntu.com/25.10/ubuntu-25.10-desktop-amd64.iso",
       "checksum": {
-        "sha256": null,
+        "sha256": "32e30d72ae4798c633323a2684d94a11582bb03a6ab38d2b0d5ae5eabc5e577b",
         "url": "https://releases.ubuntu.com/25.10/SHA256SUMS"
       },
       "latest": true
