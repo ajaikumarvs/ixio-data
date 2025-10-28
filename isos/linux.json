@@ -1,5 +1,5 @@
 {
-  "last_updated": "2025-10-27T03:50:24Z",
+  "last_updated": "2025-10-28T03:39:20Z",
   "distros": [
     {
       "name": "Ubuntu",
@@ -34,7 +34,7 @@
       ],
       "download_url": "https://releases.ubuntu.com/24.04.3/ubuntu-24.04.3-desktop-amd64.iso",
       "checksum": {
-        "sha256": "faabcf33ae53976d2b8207a001ff32f4e5daae013505ac7188c9ea63988f8328",
+        "sha256": null,
         "url": "https://releases.ubuntu.com/24.04.3/SHA256SUMS"
       }
     },
