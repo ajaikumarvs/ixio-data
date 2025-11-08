@@ -1,26 +1,19 @@
 # Ixio ISO Auto-Updater
 
-Ixio ISO Auto-Updater is a cross-platform ISO fetcher that automatically retrieves the latest download links and SHA256 checksums for popular Linux distributions (and soon Windows releases).
+Ixio ISO Auto-Updater is a cross-platform ISO fetcher that automatically retrieves the latest download links and SHA256 checksums for popular Linux distributions.
 
 This repository uses Python scripts and GitHub Actions to keep `isos/linux.json` up-to-date automatically.
 
 ## Features
 
-- Fetches the latest versions of 14 popular Linux distributions:
+- Fetches the latest versions of popular Linux distributions:
   - Ubuntu
   - Debian
   - Fedora Workstation
   - Arch Linux
-  - Linux Mint Cinnamon
-  - Manjaro KDE
-  - openSUSE Tumbleweed
-  - openSUSE Leap
-  - Pop!_OS
-  - elementary OS
-  - Zorin OS
-  - MX Linux
-  - Kali Linux
-  - CachyOS
+  - Qubes OS
+  - Rocky Linux
+  - Alma Linux
 
 - Extracts version, architecture, direct ISO URL, and SHA256 checksum
 - Stores everything in a single JSON file with the following structure:
@@ -111,16 +104,7 @@ This repository includes `.github/workflows/update_linux.yml` which:
 1. Runs daily or on-demand
 2. Generates updated `isos/linux.json`
 3. Commits changes automatically
-
-## Future Plans
-
-- Add Windows ISO fetcher
-- Add macOS recovery image links
-- Include multiple architectures (ARM, RISC-V)
-
-## License
-
-MIT License – You're free to use and adapt.
+   
 
 ## Example Integration
 
