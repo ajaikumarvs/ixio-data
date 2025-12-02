@@ -1,5 +1,5 @@
 {
-  "last_updated": "2025-12-01T04:08:56Z",
+  "last_updated": "2025-12-02T03:50:59Z",
   "distros": [
     {
       "name": "Ubuntu",
@@ -66,13 +66,13 @@
     },
     {
       "name": "Arch Linux",
-      "version": "2025.11.01",
+      "version": "2025.12.01",
       "arch": [
         "x86_64"
       ],
-      "download_url": "https://mirror.rackspace.com/archlinux/iso/latest/archlinux-2025.11.01-x86_64.iso",
+      "download_url": "https://mirror.rackspace.com/archlinux/iso/latest/archlinux-2025.12.01-x86_64.iso",
       "checksum": {
-        "sha256": "3fde01031127fb49d3fb489dd92f8d1fc0a7fc4fdfff220936031a00a7673a2e",
+        "sha256": "c2b1f13a68482db3aad008f14bb75cb15a44cd38fa8a1aa15e6675a50d4c4374",
         "url": "https://mirror.rackspace.com/archlinux/iso/latest/sha256sums.txt"
       },
       "latest": true
@@ -92,13 +92,13 @@
     },
     {
       "name": "Rocky Linux",
-      "version": "9.6",
+      "version": "9.7",
       "arch": [
         "x86_64"
       ],
-      "download_url": "https://download.rockylinux.org/pub/rocky/9/isos/x86_64/Rocky-9.6-x86_64-dvd.iso",
+      "download_url": "https://download.rockylinux.org/pub/rocky/9/isos/x86_64/Rocky-9.7-x86_64-dvd.iso",
       "checksum": {
-        "sha256": "8ff2a47e2f3bfe442617fceb7ef289b7b1d2d0502089dbbd505d5368b2b3a90f",
+        "sha256": "d48e902325dce6793935b4e13672a0d9a4f958e02d4e23fcf0a8a34c49ef03da",
         "url": "https://download.rockylinux.org/pub/rocky/9/isos/x86_64/CHECKSUM"
       },
       "latest": true
