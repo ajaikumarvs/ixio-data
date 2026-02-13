@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-02-12T04:55:00Z",
+  "last_updated": "2026-02-13T04:51:07Z",
   "distros": [
     {
       "name": "Ubuntu",
@@ -16,14 +16,14 @@
     },
     {
       "name": "Ubuntu",
-      "version": "25.04",
+      "version": "24.04.4",
       "arch": [
         "x86_64"
       ],
-      "download_url": "https://releases.ubuntu.com/25.04/ubuntu-25.04-desktop-amd64.iso",
+      "download_url": "https://releases.ubuntu.com/24.04.4/ubuntu-24.04.4-desktop-amd64.iso",
       "checksum": {
-        "sha256": "b87366b62eddfbecb60e681ba83299c61884a0d97569abe797695c8861f5dea4",
-        "url": "https://releases.ubuntu.com/25.04/SHA256SUMS"
+        "sha256": "3a4c9877b483ab46d7c3fbe165a0db275e1ae3cfe56a5657e5a47c2f99a99d1e",
+        "url": "https://releases.ubuntu.com/24.04.4/SHA256SUMS"
       }
     },
     {
