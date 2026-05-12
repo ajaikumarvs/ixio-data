@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-05-11T06:37:53Z",
+  "last_updated": "2026-05-12T06:13:01Z",
   "distros": [
     {
       "name": "Ubuntu",
@@ -37,19 +37,6 @@
         "sha256": "3a4c9877b483ab46d7c3fbe165a0db275e1ae3cfe56a5657e5a47c2f99a99d1e",
         "url": "https://releases.ubuntu.com/24.04.4/SHA256SUMS"
       }
-    },
-    {
-      "name": "Debian",
-      "version": "13.4.0",
-      "arch": [
-        "x86_64"
-      ],
-      "download_url": "https://cdimage.debian.org/debian-cd/current/amd64/iso-dvd/debian-13.4.0-amd64-DVD-1.iso",
-      "checksum": {
-        "sha256": "e41eeaffa4fdd64fbf07fc8b0d18a1b5f15ba9743a72c222008f8fd0b6463355",
-        "url": "https://cdimage.debian.org/debian-cd/current/amd64/iso-dvd/SHA256SUMS"
-      },
-      "latest": true
     },
     {
       "name": "Fedora Workstation",
