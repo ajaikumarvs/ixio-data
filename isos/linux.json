@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-05-16T05:52:18Z",
+  "last_updated": "2026-05-17T06:20:46Z",
   "distros": [
     {
       "name": "Ubuntu",
@@ -40,13 +40,13 @@
     },
     {
       "name": "Debian",
-      "version": "13.4.0",
+      "version": "13.5.0",
       "arch": [
         "x86_64"
       ],
-      "download_url": "https://cdimage.debian.org/debian-cd/current/amd64/iso-dvd/debian-13.4.0-amd64-DVD-1.iso",
+      "download_url": "https://cdimage.debian.org/debian-cd/current/amd64/iso-dvd/debian-13.5.0-amd64-DVD-1.iso",
       "checksum": {
-        "sha256": "e41eeaffa4fdd64fbf07fc8b0d18a1b5f15ba9743a72c222008f8fd0b6463355",
+        "sha256": "343b6e02a8bdf6429eb3722ee0056b5c7d9ad17d88328e499909da7205e55f50",
         "url": "https://cdimage.debian.org/debian-cd/current/amd64/iso-dvd/SHA256SUMS"
       },
       "latest": true
