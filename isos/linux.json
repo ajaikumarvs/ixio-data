@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-05-26T06:43:42Z",
+  "last_updated": "2026-05-27T07:01:44Z",
   "distros": [
     {
       "name": "Ubuntu",
@@ -105,13 +105,13 @@
     },
     {
       "name": "AlmaLinux",
-      "version": "9.7",
+      "version": "9.8",
       "arch": [
         "x86_64"
       ],
-      "download_url": "https://repo.almalinux.org/almalinux/9/isos/x86_64/AlmaLinux-9.7-x86_64-dvd.iso",
+      "download_url": "https://repo.almalinux.org/almalinux/9/isos/x86_64/AlmaLinux-9.8-x86_64-dvd.iso",
       "checksum": {
-        "sha256": "56f8bf5e44d293a040203b73b70f08bb7dc52f27654b047c20be8598f63ec1f8",
+        "sha256": "7a392bdc879afd159b30da39a356b7b26c1ddf618b01549164da9aadbc40d814",
         "url": "https://repo.almalinux.org/almalinux/9/isos/x86_64/CHECKSUM"
       },
       "latest": true
