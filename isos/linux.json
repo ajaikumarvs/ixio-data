@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-05-28T06:53:06Z",
+  "last_updated": "2026-05-29T06:53:23Z",
   "distros": [
     {
       "name": "Ubuntu",
@@ -92,13 +92,13 @@
     },
     {
       "name": "Rocky Linux",
-      "version": "9.7",
+      "version": "9.8",
       "arch": [
         "x86_64"
       ],
-      "download_url": "https://download.rockylinux.org/pub/rocky/9/isos/x86_64/Rocky-9.7-x86_64-dvd.iso",
+      "download_url": "https://download.rockylinux.org/pub/rocky/9/isos/x86_64/Rocky-9.8-x86_64-dvd.iso",
       "checksum": {
-        "sha256": "d48e902325dce6793935b4e13672a0d9a4f958e02d4e23fcf0a8a34c49ef03da",
+        "sha256": "d2bcbb64c2d67511adf80d40cd9543391a33aea5860a355b1d26d7f55236d01f",
         "url": "https://download.rockylinux.org/pub/rocky/9/isos/x86_64/CHECKSUM"
       },
       "latest": true
