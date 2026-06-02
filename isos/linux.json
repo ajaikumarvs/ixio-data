@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-01T08:32:13Z",
+  "last_updated": "2026-06-02T07:22:28Z",
   "distros": [
     {
       "name": "Ubuntu",
@@ -66,13 +66,13 @@
     },
     {
       "name": "Arch Linux",
-      "version": "2026.05.01",
+      "version": "2026.06.01",
       "arch": [
         "x86_64"
       ],
-      "download_url": "https://mirror.rackspace.com/archlinux/iso/latest/archlinux-2026.05.01-x86_64.iso",
+      "download_url": "https://mirror.rackspace.com/archlinux/iso/latest/archlinux-2026.06.01-x86_64.iso",
       "checksum": {
-        "sha256": "4af795aab6530e8344553961d0a0e8e84f9622a131ee7d44b0b86b035b2d9ff7",
+        "sha256": "ec7a9c89aed7a59a76266ccf723c5e88480e47d7088c4482436f882fa37c3989",
         "url": "https://mirror.rackspace.com/archlinux/iso/latest/sha256sums.txt"
       },
       "latest": true
