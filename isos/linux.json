@@ -1,6 +1,19 @@
 {
-  "last_updated": "2026-10-01T09:44:48Z",
+  "last_updated": "2026-10-02T09:19:24Z",
   "distros": [
+    {
+      "name": "Ubuntu",
+      "version": "26.10",
+      "arch": [
+        "x86_64"
+      ],
+      "download_url": "https://releases.ubuntu.com/26.10/ubuntu-26.10-desktop-amd64.iso",
+      "checksum": {
+        "sha256": null,
+        "url": "https://releases.ubuntu.com/26.10/SHA256SUMS"
+      },
+      "latest": true
+    },
     {
       "name": "Ubuntu",
       "version": "26.04.1",
@@ -11,8 +24,7 @@
       "checksum": {
         "sha256": "601e30fbf5d97759367c632e2c33630665039b7e2158fd068403da3ccf1bda1f",
         "url": "https://releases.ubuntu.com/26.04.1/SHA256SUMS"
-      },
-      "latest": true
+      }
     },
     {
       "name": "Ubuntu",
@@ -24,18 +36,6 @@
       "checksum": {
         "sha256": "487f87faaf547ea30e0aba4d5b53346292571256b25333a978db1692bcee9dd2",
         "url": "https://releases.ubuntu.com/26.04/SHA256SUMS"
-      }
-    },
-    {
-      "name": "Ubuntu",
-      "version": "25.10",
-      "arch": [
-        "x86_64"
-      ],
-      "download_url": "https://releases.ubuntu.com/25.10/ubuntu-25.10-desktop-amd64.iso",
-      "checksum": {
-        "sha256": "32e30d72ae4798c633323a2684d94a11582bb03a6ab38d2b0d5ae5eabc5e577b",
-        "url": "https://releases.ubuntu.com/25.10/SHA256SUMS"
       }
     },
     {
@@ -66,13 +66,13 @@
     },
     {
       "name": "Arch Linux",
-      "version": "2026.09.01",
+      "version": "2026.10.01",
       "arch": [
         "x86_64"
       ],
-      "download_url": "https://mirror.rackspace.com/archlinux/iso/latest/archlinux-2026.09.01-x86_64.iso",
+      "download_url": "https://mirror.rackspace.com/archlinux/iso/latest/archlinux-2026.10.01-x86_64.iso",
       "checksum": {
-        "sha256": "be8458032f8105e60ee2a3067f950b6e3c007ee51b38dac50e8b48e765561c91",
+        "sha256": "684ded26c63240ff4a41e8c25ee84ea6da233f557364821f13d12c2b0a9059a5",
         "url": "https://mirror.rackspace.com/archlinux/iso/latest/sha256sums.txt"
       },
       "latest": true
