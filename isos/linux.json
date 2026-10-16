@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-15T07:58:25Z",
+  "last_updated": "2026-10-16T07:52:09Z",
   "distros": [
     {
       "name": "Ubuntu",
@@ -9,7 +9,7 @@
       ],
       "download_url": "https://releases.ubuntu.com/26.10/ubuntu-26.10-desktop-amd64.iso",
       "checksum": {
-        "sha256": null,
+        "sha256": "19efc38dde60055b192526bfbba075ac1da23992f1b006ddd41cbd30db0d9b0c",
         "url": "https://releases.ubuntu.com/26.10/SHA256SUMS"
       },
       "latest": true
