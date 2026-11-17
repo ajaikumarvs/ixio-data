@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-16T10:36:28Z",
+  "last_updated": "2026-11-17T11:27:28Z",
   "distros": [
     {
       "name": "Ubuntu",
@@ -66,13 +66,13 @@
     },
     {
       "name": "Arch Linux",
-      "version": "2026.11.01",
+      "version": "2026.10.01",
       "arch": [
         "x86_64"
       ],
-      "download_url": "https://mirror.rackspace.com/archlinux/iso/latest/archlinux-2026.11.01-x86_64.iso",
+      "download_url": "https://mirror.rackspace.com/archlinux/iso/latest/archlinux-2026.10.01-x86_64.iso",
       "checksum": {
-        "sha256": "01bcdcf01af2f7d58f2794899c834770d25c9bfc945bd092b32bb66672a4a216",
+        "sha256": "684ded26c63240ff4a41e8c25ee84ea6da233f557364821f13d12c2b0a9059a5",
         "url": "https://mirror.rackspace.com/archlinux/iso/latest/sha256sums.txt"
       },
       "latest": true
@@ -92,26 +92,26 @@
     },
     {
       "name": "Rocky Linux",
-      "version": "9.8",
+      "version": "9.9",
       "arch": [
         "x86_64"
       ],
-      "download_url": "https://download.rockylinux.org/pub/rocky/9/isos/x86_64/Rocky-9.8-x86_64-dvd.iso",
+      "download_url": "https://download.rockylinux.org/pub/rocky/9/isos/x86_64/Rocky-9.9-x86_64-dvd.iso",
       "checksum": {
-        "sha256": "d2bcbb64c2d67511adf80d40cd9543391a33aea5860a355b1d26d7f55236d01f",
+        "sha256": "ace30c575470160d8f6bad42e751bde492d117034da63d4ec55c9b9f04da9263",
         "url": "https://download.rockylinux.org/pub/rocky/9/isos/x86_64/CHECKSUM"
       },
       "latest": true
     },
     {
       "name": "AlmaLinux",
-      "version": "9.8",
+      "version": "9.9",
       "arch": [
         "x86_64"
       ],
-      "download_url": "https://repo.almalinux.org/almalinux/9/isos/x86_64/AlmaLinux-9.8-x86_64-dvd.iso",
+      "download_url": "https://repo.almalinux.org/almalinux/9/isos/x86_64/AlmaLinux-9.9-x86_64-dvd.iso",
       "checksum": {
-        "sha256": "7a392bdc879afd159b30da39a356b7b26c1ddf618b01549164da9aadbc40d814",
+        "sha256": "e591228288e323e1ca8939f07354d547419c384e3ec83ea5206c9cbe93a88478",
         "url": "https://repo.almalinux.org/almalinux/9/isos/x86_64/CHECKSUM"
       },
       "latest": true
